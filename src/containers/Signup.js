@@ -19,6 +19,12 @@ export default function Signup() {
     password: "",
     confirmPassword: "",
     confirmationCode: "",
+    name: "",
+    familyName: "",
+    birthDate: "",
+    phoneNumber: "",
+    address: "",
+    gender: "",
   });
   const history = useHistory();
   const [newUser, setNewUser] = useState(null);
@@ -29,7 +35,11 @@ export default function Signup() {
     return (
       fields.email.length > 0 &&
       fields.password.length > 0 &&
-      fields.password === fields.confirmPassword
+      fields.password === fields.confirmPassword &&
+      fields.name.length > 0 &&
+      fields.familyName.length > 0 &&
+      fields.address.length > 0 &&
+      fields.phoneNumber.length > 0 && /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(fields.phoneNumber)
     );
   }
 
@@ -46,6 +56,14 @@ export default function Signup() {
       const newUser = await Auth.signUp({
         username: fields.email,
         password: fields.password,
+        attributes: {
+          name: fields.name,
+          family_name: fields.familyName,
+          address: fields.address,          // optional
+          phone_number: fields.phoneNumber,
+          birthdate: fields.birthDate,
+          gender: fields.gender,   // optional - E.164 number convention
+      }
       });
       setIsLoading(false);
       setNewUser(newUser);
@@ -126,6 +144,64 @@ export default function Signup() {
             value={fields.confirmPassword}
           />
         </FormGroup>
+        <FormGroup controlId="name" bsSize="large">
+          <ControlLabel>First Name</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={fields.name}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="familyName" bsSize="large">
+          <ControlLabel>Family Name</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={fields.familyName}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="address" bsSize="large">
+          <ControlLabel>Address</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={fields.address}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="phoneNumber" bsSize="large">
+          <ControlLabel>Phone</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            placeholder="+64XXXXXXXX"
+            value={fields.phoneNumber}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="birthDate" bsSize="large">
+          <ControlLabel>Birthdate</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={fields.birthDate}
+            placeholder="DD/MM/YYYYY"
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="gender" bsSize="large">
+          <ControlLabel>Gender</ControlLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={fields.gender}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+
+
         <LoaderButton
           block
           type="submit"

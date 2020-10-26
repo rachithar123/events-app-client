@@ -9,7 +9,7 @@ export default {
   },
   cognito: {
     REGION: "ap-southeast-2",
-    USER_POOL_ID: "ap-southeast-2_TjoGOR35k",
+    USER_POOL_ID: "ap-southeast-2_h9j3oythX",
     APP_CLIENT_ID: "568pg6c9ghkhd1aibfsc5urkj7",
     IDENTITY_POOL_ID: "ap-southeast-2:24c1bdaf-00bf-45ac-aa7f-0cabc8498065"
   }
