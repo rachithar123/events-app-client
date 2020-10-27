@@ -1,11 +1,11 @@
 export default {
   s3: {
     REGION: "ap-southeast-2",
-    BUCKET: "events-manual"
+    BUCKET: "notess-app-upload-manual"
   },
   apiGateway: {
     REGION: "ap-southeast-2",
-    URL: "https://f5zpdqztb3.execute-api.ap-southeast-2.amazonaws.com/prod/"
+    URL: "https://3m8zbu87ga.execute-api.ap-southeast-2.amazonaws.com/prod/"
   },
   cognito: {
     REGION: "ap-southeast-2",
