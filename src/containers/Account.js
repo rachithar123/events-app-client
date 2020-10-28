@@ -2,37 +2,42 @@ import React, { useState, useEffect } from "react";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
-import "./Home.css";
+import "./Account.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
+import { useHistory } from "react-router-dom";
 
 
-export default function Home() {
+export default function Account() {
+  const history = useHistory();
   const [events, setEvents] = useState([]);
-  const [allEvents, setAllEvents] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function onLoad() {
-        try {
-          const allEvents = await loadAllEvents();
-          setAllEvents(allEvents);
-        } catch (e) {
-          onError(e);
-        }
-        setIsLoading(false);
- 
+      if (!isAuthenticated) {
+        return;
+      }
+  
+      try {
+        const events = await loadEvents();
+        setEvents(events);
+      } catch (e) {
+        onError(e);
+      }
+  
+      setIsLoading(false);
     }
   
     onLoad();
   }, [isAuthenticated]);
-
-  function loadAllEvents() {
-    return API.get("events","/allevents");
+  
+  function loadEvents() {
+    return API.get("events","/events");
   }
 
-  function renderAllEventsList(events) {
+  function renderEventsList(events) {
     return [{}].concat(events).map((event, i) =>
       i !== 0 ? (
         <LinkContainer key={event.eventsId} to={`/events/${event.eventsId}`}>
@@ -41,10 +46,10 @@ export default function Home() {
           </ListGroupItem>
         </LinkContainer>
       ) : (
-        <LinkContainer key="new" to="/login">
+        <LinkContainer key="new" to="/events/new">
           <ListGroupItem>
             <h4>
-              <b>{"\uFF0B"}</b> Login to create a new note
+              <b>{"\uFF0B"}</b> Create a new note
             </h4>
           </ListGroupItem>
         </LinkContainer>
@@ -52,13 +57,16 @@ export default function Home() {
     );
   }
 
-
   function renderLander() {
+    history.push("/login");
+  }
+
+  function renderEvents() {
     return (
       <div className="notes">
-        <PageHeader>Events</PageHeader>
+        <PageHeader>Your events</PageHeader>
         <ListGroup>
-          {!isLoading && renderAllEventsList(allEvents)}
+          {!isLoading && renderEventsList(events)}
         </ListGroup>
       </div>
     );
@@ -66,7 +74,7 @@ export default function Home() {
 
   return (
     <div className="Home">
-      {renderLander()}
+      {isAuthenticated ? renderEvents() : renderLander()}
     </div>
   );
 }

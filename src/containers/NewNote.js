@@ -15,7 +15,7 @@ export default function NewNote() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dateAndTime, setDateAndTime] = useState("");
-  const [location, setLocation] = useState("");
+  const [address, setAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -42,7 +42,7 @@ export default function NewNote() {
     try {
       const attachment = file.current ? await s3Upload(file.current) : null;
   
-      await createNote({ title, description, dateAndTime, location, attachment});
+      await createNote({ title, description, dateAndTime, address, attachment});
       history.push("/");
     } catch (e) {
       onError(e);
@@ -101,9 +101,9 @@ export default function NewNote() {
           <FormControl
             autoFocus
             type="text"
-            value={location}
+            value={address}
             placeholder="Event location or Online event link"
-            onChange={e => setLocation(e.target.value)} 
+            onChange={e => setAddress(e.target.value)} 
           />
         </FormGroup>
         <FormGroup controlId="file">
