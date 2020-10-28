@@ -8,7 +8,6 @@ import { LinkContainer } from "react-router-bootstrap";
 
 
 export default function Home() {
-  const [events, setEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
