@@ -40,7 +40,15 @@ export default function Home() {
             {"Created: " + new Date(event.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
-      ) : (
+      ) : ( isAuthenticated ? (
+        <LinkContainer key="new" to="/events/new">
+        <ListGroupItem>
+          <h4>
+            <b>{"\uFF0B"}</b> create a new note
+          </h4>
+        </ListGroupItem>
+      </LinkContainer>
+      ):(
         <LinkContainer key="new" to="/login">
           <ListGroupItem>
             <h4>
@@ -48,6 +56,7 @@ export default function Home() {
             </h4>
           </ListGroupItem>
         </LinkContainer>
+      )
       )
     );
   }
