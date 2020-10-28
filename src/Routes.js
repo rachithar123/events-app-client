@@ -18,7 +18,7 @@ export default function Routes() {
       <Route exact path="/signup">
         <Signup />
       </Route>
-      <Route exact path="/notes/new">
+      <Route exact path="/events/new">
         <NewNote />
         </Route>
       <Route>

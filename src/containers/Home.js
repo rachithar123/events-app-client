@@ -8,7 +8,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 
 export default function Home() {
-  const [notes, setNotes] = useState([]);
+  const [events, setEvents] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -19,8 +19,8 @@ export default function Home() {
       }
   
       try {
-        const notes = await loadNotes();
-        setNotes(notes);
+        const events = await loadEvents();
+        setEvents(events);
       } catch (e) {
         onError(e);
       }
@@ -31,20 +31,20 @@ export default function Home() {
     onLoad();
   }, [isAuthenticated]);
   
-  function loadNotes() {
+  function loadEvents() {
     return API.get("events","/events");
   }
 
-  function renderNotesList(notes) {
-    return [{}].concat(notes).map((note, i) =>
+  function renderEventsList(events) {
+    return [{}].concat(events).map((event, i) =>
       i !== 0 ? (
-        <LinkContainer key={note.noteId} to={`/notes/${note.noteId}`}>
-          <ListGroupItem header={note.content.trim().split("\n")[0]}>
-            {"Created: " + new Date(note.createdAt).toLocaleString()}
+        <LinkContainer key={event.eventId} to={`/events/${event.eventId}`}>
+          <ListGroupItem header={event.title.trim().split("\n")[0]}>
+            {"Created: " + new Date(event.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
       ) : (
-        <LinkContainer key="new" to="/notes/new">
+        <LinkContainer key="new" to="/events/new">
           <ListGroupItem>
             <h4>
               <b>{"\uFF0B"}</b> Create a new note
@@ -64,12 +64,12 @@ export default function Home() {
     );
   }
 
-  function renderNotes() {
+  function renderEvents() {
     return (
       <div className="notes">
-        <PageHeader>Your Notes</PageHeader>
+        <PageHeader>Your events</PageHeader>
         <ListGroup>
-          {!isLoading && renderNotesList(notes)}
+          {!isLoading && renderEventsList(events)}
         </ListGroup>
       </div>
     );
@@ -77,7 +77,7 @@ export default function Home() {
 
   return (
     <div className="Home">
-      {isAuthenticated ? renderNotes() : renderLander()}
+      {isAuthenticated ? renderEvents() : renderLander()}
     </div>
   );
 }
