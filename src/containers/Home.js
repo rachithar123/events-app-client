@@ -28,14 +28,19 @@ export default function Home() {
   }, [isAuthenticated]);
 
   function loadAllEvents() {
-    return API.get("events","/allevents");
+    return API.get("events","/publicEvents");
   }
 
   function renderAllEventsList(events) {
+    
     return [{}].concat(events).map((event, i) =>
       i !== 0 ? (
-        <LinkContainer key={event.eventsId} to={`/events/${event.eventsId}`}>
+        // <LinkContainer key={event.eventsId} to={`/roevents/${event.eventsId}/${event.userId}`}>
+          <LinkContainer key={event.eventsId} to={`.`}>
           <ListGroupItem header={event.title.trim().split("\n")[0]}>
+            {event.description.trim().split("\n")[0]}<br/>
+            {"Location: " + event.address.trim().split("\n")[0]}<br/>
+            {"Date & Time: " + event.dateAndTime.trim().split("\n")[0]}<br/>
             {"Created: " + new Date(event.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
