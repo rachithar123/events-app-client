@@ -7,7 +7,6 @@ import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import NewNote from "./containers/NewNote";
 import Events from "./containers/Events";
-import ROEvents from "./containers/ROEvents";
 
 export default function Routes() {
   return (
@@ -26,9 +25,6 @@ export default function Routes() {
       </Route>
       <Route exact path="/events/:id">
         <Events />
-      </Route>
-      <Route exact path="/roevents/:eventid/:userid">
-        <ROEvents />
       </Route>
       <Route exact path="/account">
         <Account />

@@ -22,6 +22,7 @@ export default function Events() {
 
   useEffect(() => {
     function loadEvent() {
+      console.log("########### - ID: "+ id);
       return API.get("events", `/events/${id}`);
     }
 
